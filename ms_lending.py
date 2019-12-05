@@ -40,7 +40,7 @@ names = ('квартира',
             'цена 1кв м'
             )
 
-array = pandas.read_csv('cs_datasets_60_day_3795.csv', names=names)
+array = pandas.read_csv('cs_datasets.csv', names=names)
 dataset = array.values
 X = dataset[:,0:31]
 Y = dataset[:,31]
@@ -60,5 +60,5 @@ mse, mae = model.evaluate(testX, testY, verbose=0)
 print("Средняя абсолютная ошибка (тысяч рублей): ", round(mae, 0))
 
 pred = model.predict(testX)
-print("Стоимость по рассчету модели: ", round(pred[1][0], 0))
-print("Фактическая стоимость: ", testY[1])
+print('Стоимость по рассчету модели: ', round(pred[1][0], 0))
+print('Фактическая стоимость: ', testY[1])
