@@ -31,11 +31,11 @@ def write_stat_csv(data, filename):
 
 start = datetime.datetime.now()
 
-
-data = json.load(open('cs_data_60_day_5363_items.json', encoding="utf-8"))
+#загрузка данных из файла
+data = json.load(open('ms_data.json', encoding="utf-8"))
 
 dataset =[]
-
+#массив параметров влияющих на стоимость
 variables = ('квартира',
             'хрущевка',
             'улучшенной',
@@ -69,9 +69,11 @@ variables = ('квартира',
             'срочно',
             'цена 1кв м'
             )
-
+#итерация в цикле по записей с длиной '14'
 for item in data['14']:
+    #создан словарь 0 значений с ключами равными параметрам модели
     set_item = {i:0 for i in variables}
+    #проверка условий и формирование параметра 'кол-во комнат'
     if 'однок' in item[1].lower():
         set_item['кол-во комнат'] = 0.2
     elif 'двухк' in item[1].lower():
@@ -83,7 +85,7 @@ for item in data['14']:
     elif 'пятик' in item[1].lower()\
     or 'многок' in item[1].lower():
         set_item['кол-во комнат'] = 1.0
-    
+    #проверка условий и формирование параметра 'квартира'
     if 'однок' in item[1].lower()\
     or 'двухк' in item[1].lower()\
     or 'трехк' in item[1].lower()\
@@ -91,10 +93,12 @@ for item in data['14']:
     or 'пятик' in item[1].lower()\
     or 'многок' in item[1].lower():
         set_item['квартира'] = 1
-    else:
-        if 'дом' in item[7].lower():
-            set_item['дом'] = 1
+    #дома не реализованы комменет
+    #lse:
+    #   if 'дом' in item[7].lower():
+    #       set_item['дом'] = 1
 
+    #проверка условий и формирование блока параметров тип квартиры
     if 'хрущ' in item[1].lower():
         set_item['хрущевка'] = 1
     if 'улучш' in item[1].lower():
@@ -115,7 +119,8 @@ for item in data['14']:
         set_item['сталинка'] = 1
     if 'многок' in item[1].lower():
         set_item['многокомнатная'] = 1
-
+    
+    #проверка условий и формирование параметра 'левый берег'
     if 'левый' in item[1].lower()\
     or 'левый' in item[2].lower()\
     or 'левый' in item[7].lower()\
