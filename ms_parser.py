@@ -33,14 +33,15 @@ for date_url in range(1,len_day+1):
          cols = row.find_all('td', attrs={'class':'ttx'})
          cols = [ele.text.strip() for ele in cols]
          data.append([ele for ele in cols]) # Get rid of empty values
-
+            
+# строки данных о продаже имеют длину 14 или 17 отбор по условию
 for item in data:
     if item:
         if len(item) == 14 or len(item) == 17:
             result_dict[str(len(item))].append(item)
             count_items += 1
 
-
+#сообщение в консоль о количестве записей и времени выполнения
 print('Найдено и сохранено: ', count_items, 'записей объявлений')
 stop = datetime.datetime.now()
 print(stop-start)
