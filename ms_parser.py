@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import urllib.request
 import datetime
-import re
+# import re
 import json
 from bs4 import BeautifulSoup
 
 def write_json(data):
     """    
-    Сохраняет данные в файл cs_data.json
+    Сохраняет данные в файл ms_data.json
     """
     with open('ms_data.json', 'w', encoding="utf-8") as file:
         json.dump(data, file, indent=2, ensure_ascii=False)
@@ -16,18 +16,22 @@ start = datetime.datetime.now()
 
 #задаем грубину получения данных в днях
 len_day = 60
+#создаем необходимые массивы и пеменные
 result_dict = {'14':[], '17':[]}
 data = []
 count_items = 0
+
 #цикл постраничной загрузки данных
 for date_url in range(1,len_day+1):
 
-#адрес страницы для загрузки данных (url)
+    #адрес страницы для загрузки данных (url)
     url = 'http://www.citystar.ru/detal.htm?cid=2&dt=' + str(date_url)
 
+    #загружаем страницу и помещаем ее в BS
     html = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(html, 'lxml')
 
+    #помещаем в массив отобранные по тегу и классу
     rows = soup.find_all('tr', attrs={'class':'tbb'})
     for row in rows:
          cols = row.find_all('td', attrs={'class':'ttx'})
